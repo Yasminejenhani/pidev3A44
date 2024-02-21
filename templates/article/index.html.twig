@@ -1,0 +1,52 @@
+{% extends 'baseback.html.twig' %}
+
+{% block title %}Article{% endblock %}
+
+{% block content1 %}
+    <div class="card">
+    <div class="card-body">
+    <h5 class="card-title">Articles</h5>
+    <div class="table-responsive">
+    <div style="overflow-x: auto;">
+
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th><b>ID</b></th>
+            <th>Author Name</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Date Published</th>
+            <th>Image</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for article in articles %}
+            <tr>
+                <td>{{ article.id }}</td>
+                <td>{{ article.authorname }}</td>
+                <td>{{ article.title }}</td>
+                <td>{{ article.description }}</td>
+                <td>{{ article.datepub ? article.datePub|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    {% if article.image %}
+                        <img src="{{ article.image }}" alt="Article Image">
+                    {% else %}
+                        No Image Available
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{{ path('app_article_show', {'id': article.id}) }}" class="btn btn-info btn-sm">Show</a>
+                    <a href="{{ path('app_article_edit', {'id': article.id}) }}" class="btn btn-primary btn-sm">Edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">No records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_article_new') }}">Cree Un Noveau</a>
+{% endblock %}
